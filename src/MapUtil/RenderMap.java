@@ -51,10 +51,10 @@ public class RenderMap {
             	}else if(leveHeight==50){
             		g.setColor(new Color(255,0,0)); 
             		g.fillRect(ix, jy, 50,50);
-            	}else if(mapToPrint.getMatrix()[dx][dy].retId()==3564){
+            	}else if(mapToPrint.getMatrix()[dx][dy].getId()==3564){
                 	g.setColor(Color.BLUE);
                 	g.fillRect(ix, jy, 50,50);
-                }else if (mapToPrint.getMatrix()[dx][dy].retId()==0) {  
+                }else if (mapToPrint.getMatrix()[dx][dy].getId()==0) {
                 	g.setColor(Color.BLUE); 
                 	g.fillRect(ix, jy, 50,50);        
                 }else {
@@ -78,92 +78,11 @@ public class RenderMap {
         
         return mapa;
 	}
-	
-	public int checkHeight(int dx, int dy){
-		if(mapToPrint.getMatrix()[dx][dy].getCord().getZ()>=17)
-		return 2;
-		else return 1;
-	}
 
-	public void chooseGraph(int i,int j,Graphics g){
-		File file;
-		if(mapToPrint.getMatrix()[x+i][y+j-1].getCord().getZ() > mapToPrint.getMatrix()[x+i][y+j].getCord().getZ()){
-			try {
-				BufferedImage image =ImageIO.read(new File(graphLocation+"\\"+checkHeight(x+i,y+j)+"01.png"));
-				g.drawImage(image,i*50,j*50,null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if(mapToPrint.getMatrix()[x+i+1][y+j].getCord().getZ() > mapToPrint.getMatrix()[x+i][y+j].getCord().getZ()){
-			try {
-				BufferedImage image =ImageIO.read(new File(graphLocation+"\\"+checkHeight(x+i,y+j)+"02.png"));
-				g.drawImage(image,i*50,j*50,null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		if(mapToPrint.getMatrix()[x+i+1][y+j+1].getCord().getZ() > mapToPrint.getMatrix()[x+i][y+j].getCord().getZ()){
-			try {
-				BufferedImage image =ImageIO.read(new File(graphLocation+"\\"+checkHeight(x+i,y+j)+"03.png"));
-				g.drawImage(image,i*50,j*50,null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if(mapToPrint.getMatrix()[x+i-1][y+j].getCord().getZ() > mapToPrint.getMatrix()[x+i][y+j].getCord().getZ()){
-			try {
-				BufferedImage image =ImageIO.read(new File(graphLocation+"\\"+checkHeight(x+i,y+j)+"04.png"));
-				g.drawImage(image,i*50,j*50,null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if(mapToPrint.getMatrix()[x+i-1][y+j-1].getCord().getZ() > mapToPrint.getMatrix()[x+i][y+j].getCord().getZ()){
-			try {
-				BufferedImage image =ImageIO.read(new File(graphLocation+"\\"+checkHeight(x+i,y+j)+"09.png"));
-				g.drawImage(image,i*50,j*50,null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if(mapToPrint.getMatrix()[x+i+1][y+j-1].getCord().getZ() > mapToPrint.getMatrix()[x+i][y+j].getCord().getZ()){
-			try {
-				BufferedImage image =ImageIO.read(new File(graphLocation+"\\"+checkHeight(x+i,y+j)+"10.png"));
-				g.drawImage(image,i*50,j*50,null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if(mapToPrint.getMatrix()[x+i+1][y+j+1].getCord().getZ() > mapToPrint.getMatrix()[x+i][y+j].getCord().getZ()){
-			try {
-				BufferedImage image =ImageIO.read(new File(graphLocation+"\\"+checkHeight(x+i,y+j)+"11.png"));
-				g.drawImage(image,i*50,j*50,null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if(mapToPrint.getMatrix()[x+i-1][y+j+1].getCord().getZ() > mapToPrint.getMatrix()[x+i][y+j].getCord().getZ()){
-			try {
-				BufferedImage image =ImageIO.read(new File(graphLocation+"\\"+checkHeight(x+i,y+j)+"12.png"));
-				g.drawImage(image,i*50,j*50,null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-	}
 	
 	public static void main(String []args) throws IOException, ClassNotFoundException {
+		SpriteCache spriteCache = new SpriteCache();
+		spriteCache.getSprite("101.png");
 		WorldMap2 map = new WorldMap2(300,300);
 		map.create();
 		ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(".\\mapa.dat"));
@@ -174,6 +93,5 @@ public class RenderMap {
 		inputStream.close();
 		RenderMap renderer = new RenderMap(0,0,300,300,mapToRender);
 		renderer.generateMap();
-		
 	}
 }

@@ -1,4 +1,9 @@
 package MapUtil;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -37,6 +42,7 @@ public class WorldMap2 implements Serializable{
 			growSeeds(count,i+2,(i+2),(i+1));
 			System.out.println(i);
 		}
+		chooseGraph();
 		placeTrees(3000);
 	}
 	
@@ -49,7 +55,7 @@ public class WorldMap2 implements Serializable{
 		while(seedCount>0){
 			seedx = random.nextInt((int)(size.getX()*0.9))+(int)(size.getX()*0.05);
 			seedy = random.nextInt((int)(size.getY()*0.9))+(int)(size.getY()*0.05);
-			if(matrix[seedx][seedy].retId() != 0){
+			if(matrix[seedx][seedy].getId() != 0){
 					matrix[seedx][seedy].addObject(new Tree(89, 3)); //temp id for the tree = 89, growthstage = 3...for now
 			}
 			seedCount--;
@@ -83,7 +89,7 @@ public class WorldMap2 implements Serializable{
 		seedx = random.nextInt((int)(size.getX()*0.8))+(int)(size.getX()*0.1);
 		seedy = random.nextInt((int)(size.getY()*0.4))+(int)(size.getY()*0.2);
 		//System.out.println(seedx + "  " + seedy+"   "+(int)(sizex*0.70)+"  "+(int)(sizex*0.15));
-		if(matrix[seedx][seedy].retId() == onType) {
+		if(matrix[seedx][seedy].getId() == onType) {
 			matrix[seedx][seedy] = new Cell(seedx,seedy,z,type);
 			growSeeds(count/numSeeds,z,type,onType);
 			seeds--;
@@ -109,7 +115,7 @@ public class WorldMap2 implements Serializable{
 		seedx = random.nextInt((int)(size.getX()*0.9))+(int)(size.getX()*0.05);
 		seedy = random.nextInt((int)(size.getY()*0.9))+(int)(size.getY()*0.05);
 		//System.out.println(seedx + "  " + seedy+"   "+(int)(sizex*0.70)+"  "+(int)(sizex*0.15));
-		if(matrix[seedx][seedy].retId()==onType) {
+		if(matrix[seedx][seedy].getId()==onType) {
 			matrix[seedx][seedy].update(seedx,seedy,z,type);// = new Cell(seedx,seedy,z,type,new MapObject(type));
 			seeds--;
 			}
@@ -132,32 +138,32 @@ public class WorldMap2 implements Serializable{
 		while(count>0){
 			for(y=0;y<size.getY();y++){
 				for(x =0; x<size.getX(); x++){
-					if(matrix[x][y].retId()==type && matrix[x][y].getCord().getZ() == z && count>0){ //the previous instance must be the same type and the same height, count needs to be greater than 0
+					if(matrix[x][y].getId()==type && matrix[x][y].getCord().getZ() == z && count>0){ //the previous instance must be the same type and the same height, count needs to be greater than 0
 						int way = random.nextInt(7); //random choosing map cell in neighbour of existing one
 						switch (way){//trying to put new map cell
 						case 0:
-							if (((x - 1)>0) && ((y - 1)>0) && (matrix[x - 1][y - 1].retId()==onType))
+							if (((x - 1)>0) && ((y - 1)>0) && (matrix[x - 1][y - 1].getId()==onType))
 							{
 								matrix[x - 1][y - 1]= new Cell(x-1,y-1,z,type); 
 								count--;
 							}
 							break;
 						case 1:
-							if (((y - 1)>0) && (matrix[x][y - 1].retId()==onType))
+							if (((y - 1)>0) && (matrix[x][y - 1].getId()==onType))
 							{
 								matrix[x][y - 1]= new Cell(x,y-1,z,type); 
 								count--;
 							}
 							break;
 						case 2:
-							if (((x + 1) < (size.getX() - 1)) && ((y - 1) > 0) && (matrix[x + 1][y - 1].retId()==onType))
+							if (((x + 1) < (size.getX() - 1)) && ((y - 1) > 0) && (matrix[x + 1][y - 1].getId()==onType))
 							{
 								matrix[x + 1][y - 1]= new Cell(x+1,y-1,z,type); 
 								count--;
 							}
 							break;
 						case 3:
-							if (((x + 1)< (size.getX() - 1)) && (matrix[x + 1][y].retId()==onType))
+							if (((x + 1)< (size.getX() - 1)) && (matrix[x + 1][y].getId()==onType))
 							{
 								matrix[x + 1][y] = new Cell(x+1,y,z,type); 
 								x++;
@@ -165,28 +171,28 @@ public class WorldMap2 implements Serializable{
 							}
 							break;
 						case 4:
-							if (((x + 1)< (size.getX() - 1)) && ((y + 1) < (size.getY() - 1)) && (matrix[x + 1][y + 1].retId()==onType))
+							if (((x + 1)< (size.getX() - 1)) && ((y + 1) < (size.getY() - 1)) && (matrix[x + 1][y + 1].getId()==onType))
 							{
 								matrix[x + 1][y + 1] = new Cell(x+1,y+1,z,type);
 								count--;
 							}
 							break;
 						case 5:
-							if (((y + 1) < (size.getY() - 1)) && (matrix[x][y + 1].retId()==onType))
+							if (((y + 1) < (size.getY() - 1)) && (matrix[x][y + 1].getId()==onType))
 							{
 								matrix[x][y + 1]= new Cell(x,y+1,z,type);
 								count--;
 							}
 							break;
 						case 6:
-							if (((x - 1) > 0) && ((y + 1) < (size.getY() - 1)) && (matrix[x - 1][y + 1].retId()==onType))
+							if (((x - 1) > 0) && ((y + 1) < (size.getY() - 1)) && (matrix[x - 1][y + 1].getId()==onType))
 							{
 								matrix[x - 1][y + 1] = new Cell(x-1,y+1,z,type);
 								count--;
 							}
 							break;
 						case 7:
-							if (((x - 1) > 0) && (matrix[x - 1][y].retId()==onType))
+							if (((x - 1) > 0) && (matrix[x - 1][y].getId()==onType))
 							{
 								matrix[x - 1][y] = new Cell(x-1,y,z,type);
 								count--;
@@ -235,6 +241,42 @@ public class WorldMap2 implements Serializable{
 		}
 		this.matrix[x][y].update(x,y,z,id);// = new Cell(x,y,z,id,new MapObject(id));
 	}
+	public int checkHeight(int dx, int dy){
+		if(matrix[dx][dy].getCord().getZ()>=17)
+			return 2;
+		else return 1;
+	}
+
+	public void chooseGraph(){
+		for(int i=0; i<size.getX(); i++) {
+			for (int j = 0; j < size.getZ(); j++) {
+				if (matrix[i][j - 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
+					matrix[i][j].setSpriteName(checkHeight(i, j) + "01.png");
+				}
+				if (matrix[i + 1][j].getCord().getZ() > matrix[i][j].getCord().getZ()) {
+					matrix[i][j].setSpriteName(checkHeight(i, j) + "02.png");
+				}
+				if (matrix[i + 1][j + 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
+					matrix[i][j].setSpriteName(checkHeight(i, j) + "03.png");
+				}
+				if (matrix[i - 1][j].getCord().getZ() > matrix[i][j].getCord().getZ()) {
+					matrix[i][j].setSpriteName(checkHeight(i, j) + "04.png");
+				}
+				if (matrix[i - 1][j - 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
+					matrix[i][j].setSpriteName(checkHeight(i, j) + "09.png");
+				}
+				if (matrix[i + 1][j - 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
+					matrix[i][j].setSpriteName(checkHeight(i, j) + "10.png");
+				}
+				if (matrix[i + 1][j + 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
+					matrix[i][j].setSpriteName(checkHeight(i, j) + "11.png");
+				}
+				if (matrix[i - 1][j + 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
+					matrix[i][j].setSpriteName(checkHeight(i, j) + "12.png");
+				}
+			}
+		}
+	}
 	
 	/**
 	 * Return 2D array Cell matrix of this map
@@ -268,7 +310,7 @@ public class WorldMap2 implements Serializable{
 		String result = "";
 		for(int y=0;y<size.getY();y++){
 			for(int x=0;x<size.getX();x++){
-				System.out.print(matrix[x][y].retId());
+				System.out.print(matrix[x][y].getId());
 			}
 			System.out.println("");
 		}
