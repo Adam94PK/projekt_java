@@ -3,8 +3,7 @@ package MapUtil;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -164,11 +163,17 @@ public class RenderMap {
 		
 	}
 	
-	public static void main(String []args) throws IOException{
+	public static void main(String []args) throws IOException, ClassNotFoundException {
 		WorldMap2 map = new WorldMap2(300,300);
 		map.create();
-		RenderMap mapa = new RenderMap(0,0, 300, 300, map);
-		mapa.generateMap();
+		ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(".\\mapa.dat"));
+		outputStream.writeObject(map);
+		outputStream.close();
+		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(".\\mapa.dat"));
+		WorldMap2 mapToRender = (WorldMap2) inputStream.readObject();
+		inputStream.close();
+		RenderMap renderer = new RenderMap(0,0,300,300,mapToRender);
+		renderer.generateMap();
 		
 	}
 }

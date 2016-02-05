@@ -1,4 +1,5 @@
 package MapUtil;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -6,7 +7,7 @@ import java.util.*;
  * @author artir2d2
  * 
  */
-public class WorldMap2{
+public class WorldMap2 implements Serializable{
 	protected Point size;
 	protected Cell matrix[][];
 	//private River2 allRivers;

@@ -1,5 +1,6 @@
 package MapUtil;
 
+import java.io.Serializable;
 import java.time.*;
 
 import javax.swing.event.ChangeEvent;
@@ -10,7 +11,7 @@ import javax.swing.event.ChangeListener;
  * @author Artir2d2
  *
  */
-public class Tree extends MapObject{
+public class Tree extends MapObject implements Serializable{
 	private int growthStage = 4;
 	private int logNum = 20;
 	private int branchNum = 40;

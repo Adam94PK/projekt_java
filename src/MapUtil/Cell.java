@@ -1,4 +1,5 @@
 package MapUtil;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -6,7 +7,7 @@ import java.util.*;
  * @author Artir2d2
  *
  */
-public class Cell implements ExistListener{
+public class Cell implements ExistListener, Serializable{
 	private int id;
 	private Point coord;
 	private ArrayList<MapObject> object;
