@@ -10,9 +10,10 @@ import java.util.List;
  * @author Artir2d2
  */
 public abstract class MapObject {
-	protected int id;
 	protected boolean exist = false;
 	private List<ExistListener> listeners = new ArrayList<ExistListener>();
+	protected String spriteName;
+
 	
 	
 	/**
@@ -35,7 +36,7 @@ public abstract class MapObject {
 	
 	abstract public void placeObject(Cell cell);
 	abstract public void removeObject(Cell cell);
-	abstract public void interact(Character character, String arg);
+	abstract public void interact(Character character);
 	abstract public boolean equals(Object obj);
 	public static void getExist(MapObject obj){
 	}

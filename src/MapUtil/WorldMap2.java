@@ -56,7 +56,7 @@ public class WorldMap2 implements Serializable{
 			seedy = random.nextInt((int)(size.getY()*0.9))+(int)(size.getY()*0.05);
 			if(matrix[seedx][seedy].getId() != 0){
 				String spriteName ="30"+random.nextInt(8)+".png";
-				matrix[seedx][seedy].addObject(new Tree(89, 3, spriteName)); //temp id for the tree = 89, growthstage = 3...for now
+				matrix[seedx][seedy].addObject(new Tree(3, spriteName)); //temp id for the tree = 89, growthstage = 3...for now
 			}
 			seedCount--;
 		}
