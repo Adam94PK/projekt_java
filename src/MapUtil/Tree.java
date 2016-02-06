@@ -15,16 +15,18 @@ public class Tree extends MapObject implements Serializable{
 	private int growthStage = 4;
 	private int logNum = 20;
 	private int branchNum = 40;
+	private String spriteName;
 	/**
 	 * When the tree is constructed, the exist marker is turned true, exist flag is a message to remove an object from the map
 	 * Every tree should be at growth stage 4 at the begining... 
 	 * @param id
 	 * @param growthStage
 	 */
-	public Tree(int id, int growthStage){
+	public Tree(int id, int growthStage, String spriteName){
 		this.id = id;
 		this.exist = true;
 		this.growthStage = growthStage;
+		this.spriteName = spriteName;
 		switch(growthStage){
 		case 1:
 			logNum = 1;
