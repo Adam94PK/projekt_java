@@ -13,4 +13,11 @@ public class Player {
     public int getPozY(){
         return pozY;
     }
+
+    public void setPozX(int x){
+        pozX = x;
+    }
+    public void setPozY(int y){
+        pozY = y;
+    }
 }

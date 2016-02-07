@@ -11,21 +11,12 @@ public class Cell implements ExistListener, Serializable{
 	private int id;
 	private Point coord;
 	private ArrayList<MapObject> object;
-	private String spriteName;
 	
 	Cell(int x, int y, int z, int id){
 		this.coord = new Point(x,y,z);
 		this.id = id;
 		this.object = new ArrayList<MapObject>();
 	};
-	
-	public String getSpriteName(){
-		return spriteName;
-	}
-
-	public void setSpriteName(String spriteName){
-		this.spriteName = spriteName;
-	}
 
 	public int getId(){
 		return this.id;

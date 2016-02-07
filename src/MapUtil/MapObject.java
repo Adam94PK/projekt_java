@@ -33,7 +33,11 @@ public abstract class MapObject {
 			hl.existChanged(this);
 		return exist;
 	}
-	
+
+	public String getSpriteName(){
+		return spriteName;
+	}
+
 	abstract public void placeObject(Cell cell);
 	abstract public void removeObject(Cell cell);
 	abstract public void interact(Character character);

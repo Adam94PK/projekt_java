@@ -42,7 +42,6 @@ public class WorldMap2 implements Serializable{
 			growSeeds(count,i+2,(i+2),(i+1));
 			System.out.println(i);
 		}
-		chooseGraph();
 		placeTrees(3000);
 	}
 	
@@ -240,42 +239,6 @@ public class WorldMap2 implements Serializable{
 			maxHeight = z;
 		}
 		this.matrix[x][y].update(x,y,z,id);// = new Cell(x,y,z,id,new MapObject(id));
-	}
-	public int checkHeight(int dx, int dy){
-		if(matrix[dx][dy].getCord().getZ()>=17)
-			return 2;
-		else return 1;
-	}
-
-	public void chooseGraph(){
-		for(int i=0; i<size.getX(); i++) {
-			for (int j = 0; j < size.getZ(); j++) {
-				if (matrix[i][j - 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
-					matrix[i][j].setSpriteName(checkHeight(i, j) + "01.png");
-				}
-				if (matrix[i + 1][j].getCord().getZ() > matrix[i][j].getCord().getZ()) {
-					matrix[i][j].setSpriteName(checkHeight(i, j) + "02.png");
-				}
-				if (matrix[i + 1][j + 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
-					matrix[i][j].setSpriteName(checkHeight(i, j) + "03.png");
-				}
-				if (matrix[i - 1][j].getCord().getZ() > matrix[i][j].getCord().getZ()) {
-					matrix[i][j].setSpriteName(checkHeight(i, j) + "04.png");
-				}
-				if (matrix[i - 1][j - 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
-					matrix[i][j].setSpriteName(checkHeight(i, j) + "09.png");
-				}
-				if (matrix[i + 1][j - 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
-					matrix[i][j].setSpriteName(checkHeight(i, j) + "10.png");
-				}
-				if (matrix[i + 1][j + 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
-					matrix[i][j].setSpriteName(checkHeight(i, j) + "11.png");
-				}
-				if (matrix[i - 1][j + 1].getCord().getZ() > matrix[i][j].getCord().getZ()) {
-					matrix[i][j].setSpriteName(checkHeight(i, j) + "12.png");
-				}
-			}
-		}
 	}
 	
 	/**
