@@ -34,7 +34,7 @@ public class GameFrame extends Canvas {
 
     public void init(){
         worldMap2 = new WorldMap2(300, 300);
-        worldMap2.create();
+        worldMap2.createMap.start();
         player = new Player();
         player.setPozX(150);
         player.setPozY(150);

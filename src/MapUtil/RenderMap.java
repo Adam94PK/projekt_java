@@ -1,4 +1,4 @@
-//package MapUtil;
+package MapUtil;//package MapUtil;
 //
 //import java.awt.Color;
 //import java.awt.Graphics;

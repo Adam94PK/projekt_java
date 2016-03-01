@@ -3,8 +3,20 @@ package MapUtil;
 /**
  * Created by Adam Zadora on 2016-02-06.
  */
-public class Player {
+public class Player extends MapObject{
     private int pozX, pozY;
+    private String playerName;
+
+    public Player(String playerName, int x, int y, String playerSprite){
+        this.playerName = playerName;
+        this.pozX = x;
+        this.pozY = y;
+        this.spriteName = playerSprite;
+    }
+
+    public Player(){
+       
+    }
 
     public int getPozX(){
         return pozX;
@@ -19,5 +31,25 @@ public class Player {
     }
     public void setPozY(int y){
         pozY = y;
+    }
+
+    @Override
+    public void placeObject(Cell cell) {
+
+    }
+
+    @Override
+    public void removeObject(Cell cell) {
+
+    }
+
+    @Override
+    public void interact(Character character) {
+
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return false;
     }
 }
