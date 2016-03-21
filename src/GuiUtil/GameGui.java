@@ -76,7 +76,7 @@ public class GameGui extends JFrame{
 		/*
 		 * Main menu
 		 */
-		String BGImage = new String("BGImage.png");
+		String BGImage = "BGImage.png";
 		mainMenu = new ImagePanel(BGImage);
 		contentPane.add(mainMenu, "main_menu");
 		GridBagLayout gbl_mainMenu = new GridBagLayout();

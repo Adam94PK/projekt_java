@@ -36,7 +36,7 @@ public class Cell implements ExistListener, Serializable{
 	}
 	
 	public void removeObject(MapObject obj){
-			object.remove(obj);
+		System.out.println(object.remove(obj));
 	}
 
 	public MapObject getObject(int i){

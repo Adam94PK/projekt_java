@@ -17,15 +17,17 @@ import java.util.concurrent.FutureTask;
  * Created by Artir2d2 on 26.02.2016.
  */
 public class Client implements Runnable{
-    private static ExecutorService exec;
-    private static InetAddress adr;
+    private ExecutorService exec;
+    private InetAddress adr;
     private static Callable<String> clientTask;
-    private static ClientTask task;
-    private static ClientTaskCallback<String> ctc;
+    private ClientTask task;
+    private ClientTaskCallback<String> ctc;
     private int port;
     protected static String clientID;
-    private BufferedReader in;
-    private PrintWriter out;
+   // private BufferedReader in;
+   // protected static PrintWriter out;
+    protected static ObjectOutputStream out;
+    protected static ObjectInputStream in;
     private Socket socket;
     public static Cell cellsToRender[][];
 
@@ -38,20 +40,36 @@ public class Client implements Runnable{
         }catch(IOException e) {
             System.err.println("Creating socket failed");
         }
+        this.in = new ObjectInputStream(this.socket.getInputStream());
+        this.out = new ObjectOutputStream(this.socket.getOutputStream());
 
-        this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream())); //pobieranie danych
-        this.out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())),true); //wysyłanie danych
-        this.clientID = in.readLine();//getting client id from server
-        this.out.println(playerName);//sending player nickname to server
+        try {
+            this.clientID = (String)in.readObject();//getting client id from server
+            System.out.println("Client: "+clientID);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        //this.out.println(playerName);//sending player nickname to server
+        out.writeObject(playerName);
         if(clientID.contains("ERROR")){ //message to print if something gone wrong on server side
             GameGui.messageToPop = clientID;
-            System.out.println(clientID);
+            System.out.println("Client: "+clientID);
         }else{
+            System.out.println("Connected to server");
             GameGui.messageToPop = "Connected to server";
-            String startClientMessage = in.readLine(); //waits until server send "startclient" message
+            String startClientMessage = ""; //waits until server send "startclient" message
+            try {
+                this.in = new ObjectInputStream(this.socket.getInputStream());
+                this.out = new ObjectOutputStream(this.socket.getOutputStream());
+                startClientMessage = (String)in.readObject();
+                System.out.println("Client: succes with reading object");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            System.out.println(startClientMessage+"<-tu startclient");
             if(startClientMessage.equals("startclient")){ //now when the server is ready, client also starts its game task
                 this.exec = Executors.newCachedThreadPool();
-                task = new ClientTask(socket);
+                task = new ClientTask();
                 ctc = new ClientTaskCallback<String>(task);
                 exec.execute(ctc);
                 System.out.println("Adress = " + adr);

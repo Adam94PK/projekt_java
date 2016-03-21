@@ -42,7 +42,27 @@ public abstract class MapObject implements Serializable{
 	abstract public void placeObject(Cell cell);
 	abstract public void removeObject(Cell cell);
 	abstract public void interact(Character character);
-	abstract public boolean equals(Object obj);
 	public static void getExist(MapObject obj){
+	}
+
+	@Override
+	public int hashCode() {
+		int result = (exist ? 1 : 0);
+		result = 31 * result + (listeners != null ? listeners.hashCode() : 0);
+		result = 31 * result + spriteName.hashCode();
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		MapObject mapObject = (MapObject) o;
+
+		if (exist != mapObject.exist) return false;
+		if (listeners != null ? !listeners.equals(mapObject.listeners) : mapObject.listeners != null) return false;
+		return spriteName.equals(mapObject.spriteName);
+
 	}
 }
